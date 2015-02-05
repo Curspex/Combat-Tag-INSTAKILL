@@ -7,4 +7,4 @@ commands:
   CombatTag:
     description: Shows the current remaining time in a tag
     aliases: ct
-    usage: /ct
+    usage: /ct, /ct check <player>
