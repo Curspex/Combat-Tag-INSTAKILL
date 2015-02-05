@@ -1,8 +1,8 @@
 name: CombatTag
-version: 1.1.2
-author: cheddar262
+version: 1.1.3
+authors: [cheddar262, Omnivion]
 main: com.trc202.CombatTag.CombatTag
-dev-url: http://dev.bukkit.org/server-mods/combat-tag
+dev-url: https://github.com/Curspex/Combat-Tag-INSTAKILL
 commands:
   CombatTag:
     description: Shows the current remaining time in a tag

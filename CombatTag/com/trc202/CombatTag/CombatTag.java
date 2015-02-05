@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.logging.Logger;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -47,12 +48,6 @@ public class CombatTag extends JavaPlugin {
         settingsFile = new File(mainDirectory + File.separator + "settings.prop");
         settingsHelper = new SettingsHelper(settingsFile, "CombatTag");
     }
-    
-    @Override
-    public void onDisable() {
-        //Just in case...
-        log.info("[CombatTag] Disabled");
-    }
 
     @Override
     public void onEnable() {
@@ -63,7 +58,6 @@ public class CombatTag extends JavaPlugin {
         pm.registerEvents(entityListener, this);
         pm.registerEvents(commandPreventer, this);
         pm.registerEvents(blockListener, this);
-        ctIncompatible.startup(pm);
         log.info("[" + getDescription().getName() + "]" + " has loaded with a tag time of " + settings.getTagDuration() + " seconds");
     }
 
@@ -138,6 +132,25 @@ public class CombatTag extends JavaPlugin {
 				} else {
 					if (sender instanceof Player) {
 						sender.sendMessage(ChatColor.RED + "[CombatTag] You don't have the permission 'combattag.reload'!");
+					}
+				}
+				return true;
+			} else if (args[0].equalsIgnoreCase("check"))
+			{
+				if (args.length != 2)
+					sender.sendMessage(ChatColor.DARK_RED + "Error: " + ChatColor.WHITE + "Proper usage is '/ct check <player>'");
+				else
+				{
+					@SuppressWarnings("deprecation")
+					Player player = Bukkit.getPlayer(args[1]);
+					if (player == null)
+						sender.sendMessage(ChatColor.DARK_RED + "Error: " + ChatColor.WHITE + "Player not found.");
+					else
+					{
+						if(isInCombat((player).getUniqueId()))
+							sender.sendMessage(ChatColor.GREEN + player.getName() + " is in combat!");
+						else
+							sender.sendMessage(ChatColor.RED + player.getName() + " is not in combat!");
 					}
 				}
 				return true;

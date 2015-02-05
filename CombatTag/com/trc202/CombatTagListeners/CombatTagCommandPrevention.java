@@ -25,11 +25,6 @@ public class CombatTagCommandPrevention implements Listener{
 		if(plugin.isInCombat(player.getUniqueId())){
 			String command = event.getMessage();
 			for(String disabledCommand : plugin.settings.getDisabledCommands()){
-				if (disabledCommand.equalsIgnoreCase("all") && !command.equalsIgnoreCase("/ct") && !command.equalsIgnoreCase("/combattag")){
-					player.sendMessage(ChatColor.RED + "[CombatTag] All commands are disabled while in combat");
-					event.setCancelled(true);
-					return;
-				}
 				if(command.indexOf(" ") == disabledCommand.length()){
 					if(command.substring(0, command.indexOf(" ")).equalsIgnoreCase(disabledCommand)){
 						if(plugin.isDebugEnabled()){plugin.log.info("[CombatTag] Combat Tag has blocked the command: " + disabledCommand + " .");}

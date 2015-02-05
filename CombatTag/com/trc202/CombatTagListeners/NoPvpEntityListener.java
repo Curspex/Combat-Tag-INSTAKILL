@@ -3,7 +3,6 @@ package com.trc202.CombatTagListeners;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
@@ -22,28 +21,21 @@ public class NoPvpEntityListener implements Listener{
 		this.plugin = combatTag;
 	}
 	
-	@EventHandler(priority = EventPriority.MONITOR)
+	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onEntityDamage(EntityDamageByEntityEvent e){
-		if (e.isCancelled() || (e.getDamage() == 0)){return;}
+		if (e.getDamage() == 0) return;
 		Entity dmgr = e.getDamager();
 		if(dmgr instanceof Projectile){
-			if(((Projectile)dmgr).getShooter() instanceof Entity){
+			if(((Projectile)dmgr).getShooter() instanceof Entity)
 				dmgr = (Entity) ((Projectile)dmgr).getShooter();
-			}
 		}
 		if(e.getEntity() instanceof Player){
 			Player tagged = (Player) e.getEntity();
-			
-			if(disallowedWorld(tagged.getWorld().getName())){return;} //If the damaged player is an npc do nothing
 			
 			if ((dmgr instanceof Player) && plugin.settings.playerTag()){
 				Player damagerPlayer = (Player) dmgr;
 				if(damagerPlayer != tagged && damagerPlayer != null){
 					onPlayerDamageByPlayer(damagerPlayer,tagged);
-				}
-			} else if (plugin.settings.mobTag()){
-				if (dmgr != null){
-					onPlayerDamageByMob((LivingEntity) dmgr,tagged);
 				}
 			}
 		}
@@ -51,9 +43,8 @@ public class NoPvpEntityListener implements Listener{
 
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onEntityDeath(EntityDeathEvent event){
-		if(event.getEntity() instanceof Player){
+		if(event.getEntity() instanceof Player)
 			onPlayerDeath((Player) event.getEntity());
-		}
 	}
 
 	public void onPlayerDeath(Player deadPlayer){
@@ -62,7 +53,6 @@ public class NoPvpEntityListener implements Listener{
 
 	public void onPlayerDamageByPlayer(Player damager, Player damaged){
 
-		if(plugin.ctIncompatible.WarArenaHook(damager) && plugin.ctIncompatible.WarArenaHook(damaged)){
 			if(!damager.hasPermission("combattag.ignore")){	
 				if(plugin.settings.blockCreativeTagging() && damager.getGameMode() == GameMode.CREATIVE){damager.sendMessage(ChatColor.RED + "[CombatTag] You can't tag players while in creative mode!");return;}
 
@@ -94,22 +84,6 @@ public class NoPvpEntityListener implements Listener{
 					damaged.setFlying(false);
 				}
 			}
-		}
-	}
-
-	private void onPlayerDamageByMob(LivingEntity damager, Player damaged) {
-		if(plugin.ctIncompatible.WarArenaHook(damaged)){
-			if(!damaged.hasPermission("combattag.ignoremob")){	
-				if(!plugin.isInCombat(damaged.getUniqueId())){
-					if(plugin.settings.isSendMessageWhenTagged()){
-						String tagMessage = plugin.settings.getTagMessageDamaged();
-						tagMessage = tagMessage.replace("[player]", damager.getType().name());
-						damaged.sendMessage(ChatColor.RED + "[CombatTag] " + tagMessage);
-					}
-				}
-				plugin.addTagged(damaged);
-			}
-		}
 	}
 
 	
