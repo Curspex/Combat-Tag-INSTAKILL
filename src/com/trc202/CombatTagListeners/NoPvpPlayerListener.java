@@ -11,8 +11,6 @@ import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
-import org.bukkit.event.player.PlayerToggleFlightEvent;
-
 import com.trc202.CombatTag.CombatTag;
 
 public class NoPvpPlayerListener implements Listener {
@@ -105,7 +103,7 @@ public class NoPvpPlayerListener implements Listener {
 		}
 	}
 	
-	@EventHandler(priority = EventPriority.HIGHEST)
+/*	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onPlayerToggleFly(PlayerToggleFlightEvent event){
 		Player player = event.getPlayer();
 		if(plugin.isInCombat(player.getUniqueId()) && event.isFlying()){
@@ -113,6 +111,6 @@ public class NoPvpPlayerListener implements Listener {
 			player.setFlying(false);
 			event.setCancelled(true);
 		}
-	}
+	}*/
 
 }
