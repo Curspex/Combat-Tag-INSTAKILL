@@ -121,15 +121,5 @@ public class NoPvpPlayerListener implements Listener {
 			}
 		}
 	}
-	
-/*	@EventHandler(priority = EventPriority.HIGHEST)
-	public void onPlayerToggleFly(PlayerToggleFlightEvent event){
-		Player player = event.getPlayer();
-		if(plugin.isInCombat(player.getUniqueId()) && event.isFlying()){
-			player.sendMessage(ChatColor.RED + "[CombatTag] You can't fly while tagged!");
-			player.setFlying(false);
-			event.setCancelled(true);
-		}
-	}*/
 
 }

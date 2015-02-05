@@ -21,7 +21,6 @@ public class SettingsLoader {
 	private static String mobTag = "mobTag";
 	private static String playerTag = "playerTag";
 	private static String blockCreativeTagging = "blockCreativeTagging";
-	private static String blockFlying = "blockFlying";
 
 	public Settings loadSettings(SettingsHelper helper, String version){
 		settings = new Settings();
@@ -79,8 +78,7 @@ public class SettingsLoader {
 		(helper.getProperty(onlyDamagerTagged) != null) && 
 		(helper.getProperty(mobTag) != null) && 
 		(helper.getProperty(playerTag) != null) &&
-		(helper.getProperty(blockCreativeTagging) != null) &&
-		(helper.getProperty(blockFlying) != null)
+		(helper.getProperty(blockCreativeTagging) != null)
 		){
 			return true;
 		}else{
