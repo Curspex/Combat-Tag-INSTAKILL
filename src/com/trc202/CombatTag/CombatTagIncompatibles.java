@@ -14,32 +14,40 @@ public class CombatTagIncompatibles {
 
 	CombatTag plugin;
 
-	public CombatTagIncompatibles(CombatTag combatTag){
+	public CombatTagIncompatibles(CombatTag combatTag)
+	{
 		this.plugin = combatTag;
 	}
 
-	public WorldGuardPlugin getWorldGuard() {
+	public WorldGuardPlugin getWorldGuard()
+	{
 		Plugin wg = plugin.getServer().getPluginManager().getPlugin("WorldGuard");
 
 		// WorldGuard may not be loaded
-		if (wg == null || !(wg instanceof WorldGuardPlugin)) {
+		if (wg == null || !(wg instanceof WorldGuardPlugin))
+		{
 			return null;
 		}
 
 		return (WorldGuardPlugin) wg;
 	}
 
-	public boolean InWGCheck(Player plr){
+	public boolean InWGCheck(Player plr)
+	{
 		WorldGuardPlugin wg = getWorldGuard();
-		if (wg != null) {
+		if (wg != null)
+		{
 			Location plrLoc = plr.getLocation();
 			Vector pt = toVector(plrLoc);
 
 			RegionManager regionManager = wg.getRegionManager(plr.getWorld());
 			ApplicableRegionSet set = regionManager.getApplicableRegions(pt);
-			if(set != null){
+			if(set != null)
+			{
 				return set.allows(DefaultFlag.PVP) && !set.allows(DefaultFlag.INVINCIBILITY);
-			} else {
+			}
+			else
+			{
 				return true;
 			}
 		}
