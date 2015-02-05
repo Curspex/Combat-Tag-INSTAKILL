@@ -9,7 +9,8 @@ public class CombatTagApi {
 	
 	private CombatTag plugin;
 	
-	public CombatTagApi(CombatTag plugin){
+	public CombatTagApi(CombatTag plugin)
+	{
 		this.plugin = plugin;
 	}
 
@@ -19,7 +20,8 @@ public class CombatTagApi {
 	 * @param player
 	 * @return true if player is in combat
 	 */
-	public boolean isInCombat(Player player){
+	public boolean isInCombat(Player player)
+	{
 		return plugin.isInCombat(player.getUniqueId());
 	}
 	
@@ -30,9 +32,11 @@ public class CombatTagApi {
 	 * @return true if player is online and in combat
 	 */
 	@SuppressWarnings("deprecation")
-	public boolean isInCombat(String name){
+	public boolean isInCombat(String name)
+	{
 		Player player = Bukkit.getPlayerExact(name);
-		if(player != null){
+		if (player != null)
+		{
 			return plugin.isInCombat(player.getUniqueId());
 		}
 		return false;
@@ -44,10 +48,14 @@ public class CombatTagApi {
 	 *  -2 if the player is not in combat
 	 * @param player
 	 */
-	public long getRemainingTagTime(Player player){
-		if(plugin.isInCombat(player.getUniqueId())){
+	public long getRemainingTagTime(Player player)
+	{
+		if(plugin.isInCombat(player.getUniqueId()))
+		{
 			return plugin.getRemainingTagTime(player.getUniqueId());
-		}else{
+		}
+		else
+		{
 			return -1L;
 		}
 	}
@@ -59,12 +67,17 @@ public class CombatTagApi {
 	 * @param playerName
 	 */
 	@SuppressWarnings("deprecation")
-	public long getRemainingTagTime(String name){
-		if(Bukkit.getPlayerExact(name) != null){
+	public long getRemainingTagTime(String name)
+	{
+		if(Bukkit.getPlayerExact(name) != null)
+		{
 			Player player = Bukkit.getPlayerExact(name);
-			if(plugin.isInCombat(player.getUniqueId())){
+			if(plugin.isInCombat(player.getUniqueId()))
+			{
 				return plugin.getRemainingTagTime(player.getUniqueId());
-			}else{
+			}
+			else
+			{
 				return -1L;
 			}
 		}
@@ -76,7 +89,8 @@ public class CombatTagApi {
 	 * @param player
 	 * @return true if the action is successful, false if not
 	 */
-	public boolean tagPlayer(Player player){
+	public boolean tagPlayer(Player player)
+	{
 		return plugin.addTagged(player);
 	}
 	
@@ -86,7 +100,8 @@ public class CombatTagApi {
 	 * @param player
 	 * @return nothing
 	 */
-	public void untagPlayer(Player player){
+	public void untagPlayer(Player player)
+	{
 		plugin.removeTagged(player.getUniqueId());
 	}
 	
@@ -95,7 +110,8 @@ public class CombatTagApi {
 	 * @param Name of config option
 	 * @return String value of option
 	 */
-	public String getConfigOption(String configKey){
+	public String getConfigOption(String configKey)
+	{
 		return plugin.getSettingsHelper().getProperty(configKey);
 	}
 }
