@@ -3,7 +3,7 @@
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="C:/Users/Adam/Desktop/dev/Devel/Sof/Resco/bukkit-17.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Adam/Desktop/dev/Devel/Sof/Resco/spigot-17.jar"/>
-	<classpathentry kind="src" path="CombatTag"/>
+	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="C:/Users/Adam/Desktop/dev/Devel/Sof/Resco/WorldGuard.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Adam/Desktop/dev/Devel/Sof/Resco/WorldEdit.jar"/>
 	<classpathentry kind="output" path="bin"/>
