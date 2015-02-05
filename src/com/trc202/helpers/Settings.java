@@ -19,9 +19,9 @@ public class Settings {
 	private boolean mobTag;
 	private boolean playerTag;
 	private boolean blockCreativeTagging;
-	private boolean blockFly;
 	
-	public Settings(){
+	public Settings()
+	{
 		tagDuration = 10;
 		debugEnabled = false;
 		disabledCommands = new String[0];
@@ -39,150 +39,176 @@ public class Settings {
 		mobTag = false;
 		playerTag = true;
 		blockCreativeTagging = true;
-		blockFly = false;
 	}
 
-	public void setDebugEnabled(boolean debugEnabled) {
+	public void setDebugEnabled(boolean debugEnabled)
+	{
 		this.debugEnabled = debugEnabled;
 	}
 
-	public boolean isDebugEnabled() {
+	public boolean isDebugEnabled()
+	{
 		return debugEnabled;
 	}
 
-	public void setTagDuration(int tagDuration) {
+	public void setTagDuration(int tagDuration)
+	{
 		this.tagDuration = tagDuration;
 	}
 
-	public int getTagDuration() {
+	public int getTagDuration()
+	{
 		return tagDuration;
 	}
 	
-	public void setDropTagonKick(boolean droptagonkick) {
+	public void setDropTagonKick(boolean droptagonkick)
+	{
 		this.dropTagOnKick = droptagonkick;
 	}
 	
-	public boolean dropTagOnKick() {
+	public boolean dropTagOnKick()
+	{
 		return dropTagOnKick;
 	} 
 
-	public String[] getDisabledCommands() {
+	public String[] getDisabledCommands()
+	{
 		return disabledCommands;
 	}
 	
-	public void setDisabledCommands(String[] disabledCommands){
+	public void setDisabledCommands(String[] disabledCommands)
+	{
 		this.disabledCommands = disabledCommands;
 	}
 
-	public void setDisallowedWorlds(String[] disallowedWorlds) {
+	public void setDisallowedWorlds(String[] disallowedWorlds)
+	{
 		this.disallowedWorlds = disallowedWorlds;
 	}
 
-	public String[] getDisallowedWorlds() {
+	public String[] getDisallowedWorlds()
+	{
 		return disallowedWorlds;
 	}
 
-	public boolean isBlockEditWhileTagged() {
+	public boolean isBlockEditWhileTagged()
+	{
 		return blockEditWhileTagged;
 	}
 	
-	public void setBlockEditWhileTagged(boolean blockEditWhileTagged) {
+	public void setBlockEditWhileTagged(boolean blockEditWhileTagged)
+	{
 		this.blockEditWhileTagged = blockEditWhileTagged;
 	}
 
-	public boolean isSendMessageWhenTagged() {
+	public boolean isSendMessageWhenTagged()
+	{
 		return sendMessageWhenTagged;
 	}
 	
-	public void setSendMessageWhenTagged(boolean sendMessageWhenTagged) {
+	public void setSendMessageWhenTagged(boolean sendMessageWhenTagged)
+	{
 		this.sendMessageWhenTagged = sendMessageWhenTagged;
 	}
 
-	public void setCommandMessageTagged(String message) {
+	public void setCommandMessageTagged(String message)
+	{
 		this.commandMessageTagged = message;
 	}
 
-	public String getCommandMessageTagged() {
+	public String getCommandMessageTagged()
+	{
 		return commandMessageTagged;
 	}
 
-	public void setCommandMessageNotTagged(String message) {
+	public void setCommandMessageNotTagged(String message)
+	{
 		this.commandMessageNotTagged = message;
 	}
 
-	public String getCommandMessageNotTagged() {
+	public String getCommandMessageNotTagged()
+	{
 		return commandMessageNotTagged;
 	}
 	
-	public void setBlockTeleport(boolean blockTeleport) {
+	public void setBlockTeleport(boolean blockTeleport)
+	{
 		this.blockTeleport = blockTeleport;
 	}
 	
-	public boolean blockTeleport() {
+	public boolean blockTeleport()
+	{
 		return blockTeleport;
 	}
 	
-	public void setTagMessageDamaged(String tagMessageDamaged) {
+	public void setTagMessageDamaged(String tagMessageDamaged)
+	{
 		this.tagMessageDamaged = tagMessageDamaged;
 	}
 	
-	public String getTagMessageDamaged() {
+	public String getTagMessageDamaged()
+	{
 		return tagMessageDamaged;
 	}
 	
-	public void setTagMessageDamager(String tagMessageDamager) {
+	public void setTagMessageDamager(String tagMessageDamager)
+	{
 		this.tagMessageDamager = tagMessageDamager;
 	}
 	
-	public String getTagMessageDamager() {
+	public String getTagMessageDamager()
+	{
 		return tagMessageDamager;
 	}
 
-	public void setBlockEnderPearl(boolean blockEnderPearl) {
+	public void setBlockEnderPearl(boolean blockEnderPearl)
+	{
 		this.blockEnderPearl = blockEnderPearl;
 	}
 	
-	public boolean blockEnderPearl() {
+	public boolean blockEnderPearl()
+	{
 		return blockEnderPearl;
 	}
 
-	public void setOnlyDamager(boolean onlyDamagerTagged) {
+	public void setOnlyDamager(boolean onlyDamagerTagged)
+	{
 		this.onlyDamagerTagged = onlyDamagerTagged;
 	}
 	
-	public boolean onlyDamagerTagged() {
+	public boolean onlyDamagerTagged()
+	{
 		return onlyDamagerTagged;
 	}
 	
-	public void setMobTag(boolean mobTag) {
+	public void setMobTag(boolean mobTag)
+	{
 		this.mobTag = mobTag;
 	}
 	
-	public boolean mobTag() {
+	public boolean mobTag()
+	{
 		return mobTag;
 	}
 	
-	public void setPlayerTag(boolean playerTag) {
+	public void setPlayerTag(boolean playerTag)
+	{
 		this.playerTag = playerTag;
 	}
 	
-	public boolean playerTag() {
+	public boolean playerTag()
+	{
 		return playerTag;
 	}
 
-	public void setBlockCreativeTagging(boolean blockCreativeTagging) {
+	public void setBlockCreativeTagging(boolean blockCreativeTagging)
+	{
 		this.blockCreativeTagging = blockCreativeTagging;
 	}
 
-	public boolean blockCreativeTagging() {
+	public boolean blockCreativeTagging()
+	{
 		return blockCreativeTagging;
 	}
 	
-	public void setBlockFly(boolean blockFly) {
-		this.blockFly = blockFly;
-	}
-	
-	public boolean blockFly() {
-		return blockFly;
-	}
 }

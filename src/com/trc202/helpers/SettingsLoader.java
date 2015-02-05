@@ -54,7 +54,6 @@ public class SettingsLoader {
 		if(helper.getProperty(mobTag) == null) {helper.setProperty(mobTag, Boolean.toString(temp.mobTag()));}
 		if(helper.getProperty(playerTag) == null) {helper.setProperty(playerTag, Boolean.toString(temp.playerTag()));}
 		if(helper.getProperty(blockCreativeTagging) == null) {helper.setProperty(blockCreativeTagging, Boolean.toString(temp.blockCreativeTagging()));}
-		if(helper.getProperty(blockFlying) == null) {helper.setProperty(blockFlying, Boolean.toString(temp.blockFly()));}
 	}
 
 	private boolean isLatestVersion(SettingsHelper helper, String vers){
@@ -116,6 +115,5 @@ public class SettingsLoader {
 		settings.setMobTag(Boolean.valueOf(helper.getProperty(mobTag)));
 		settings.setPlayerTag(Boolean.valueOf(helper.getProperty(playerTag)));
 		settings.setBlockCreativeTagging(Boolean.valueOf(helper.getProperty(blockCreativeTagging)));
-		settings.setBlockFly(Boolean.valueOf(helper.getProperty(blockFlying)));
 	}
 }
