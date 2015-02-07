@@ -26,13 +26,16 @@ public class NoPvpEntityListener implements Listener {
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onEntityDamage(EntityDamageByEntityEvent e)
 	{
-		if (e.getDamage() == 0)
+		if (e.getDamage() <= 0)
 			return;
 		Entity dmgr = e.getDamager();
 		if (dmgr instanceof Projectile)
 		{
-			if (((Projectile)dmgr).getShooter() instanceof Entity)
-				dmgr = (Entity) ((Projectile)dmgr).getShooter();
+			Projectile projectile = (Projectile) dmgr;
+			if (projectile.getShooter().equals(e.getEntity()))
+				return;
+			else if (projectile.getShooter() instanceof Entity)
+				dmgr = (Entity) projectile.getShooter();
 		}
 		if (e.getEntity() instanceof Player)
 		{
