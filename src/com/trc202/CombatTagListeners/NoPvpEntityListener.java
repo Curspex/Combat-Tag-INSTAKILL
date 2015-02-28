@@ -32,7 +32,8 @@ public class NoPvpEntityListener implements Listener {
 		if (dmgr instanceof Projectile)
 		{
 			Projectile projectile = (Projectile) dmgr;
-			if (projectile.getShooter().equals(e.getEntity()))
+			if (projectile.getShooter() == null) return;
+			else if (projectile.getShooter().equals(e.getEntity()))
 				return;
 			else if (projectile.getShooter() instanceof Entity)
 				dmgr = (Entity) projectile.getShooter();
