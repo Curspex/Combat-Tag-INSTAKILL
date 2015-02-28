@@ -22,7 +22,7 @@ public class NoPvpEntityListener implements Listener {
 	{
 		this.plugin = combatTag;
 	}
-	
+
 	@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
 	public void onEntityDamage(EntityDamageByEntityEvent e)
 	{
@@ -101,7 +101,7 @@ public class NoPvpEntityListener implements Listener {
 			}
 	}
 
-	
+
 	public boolean disallowedWorld(String worldName)
 	{
 		for(String disallowedWorld : plugin.settings.getDisallowedWorlds())
@@ -114,4 +114,5 @@ public class NoPvpEntityListener implements Listener {
 		}
 		return false;
 	}
+
 }
