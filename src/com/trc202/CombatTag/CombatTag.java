@@ -230,6 +230,7 @@ public class CombatTag extends JavaPlugin {
 								}
 							}
 						}
+						break;
 						
 					case "FORCEUNTAG":
 						if (sender.hasPermission("combattag.admin"))
@@ -260,6 +261,7 @@ public class CombatTag extends JavaPlugin {
 								}
 							}
 						}
+						break;
 
 					case "COMMAND":
 						if (sender.hasPermission("combattag.command"))
