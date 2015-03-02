@@ -33,7 +33,7 @@ public class CombatTag extends JavaPlugin {
     public final Logger log = Logger.getLogger("Minecraft");
     private HashMap<UUID, Long> tagged;
     private static String mainDirectory = "plugins/CombatTagInstakill";
-    private static final List<String> SUBCOMMANDS = ImmutableList.of("reload", "command");
+    private static final List<String> SUBCOMMANDS = ImmutableList.of("reload", "command", "forcetag");
     private static final List<String> COMMAND_SUBCOMMANDS = ImmutableList.of("add", "remove");
 
     
@@ -148,128 +148,158 @@ public class CombatTag extends JavaPlugin {
 				}
 				return true;
 			}
-			else if (args[0].equalsIgnoreCase("reload"))
+			else
 			{
-				if (sender.hasPermission("combattag.reload"))
+				switch (args[0].toUpperCase())
 				{
-					settings = new SettingsLoader().loadSettings(settingsHelper, this.getDescription().getVersion());
-					if (sender instanceof Player)
-					{
-						sender.sendMessage(ChatColor.RED + "[CombatTag] Settings were reloaded!");
-					}
-					else
-					{
-						log.info("[CombatTag] Settings were reloaded!");
-					}
-				}
-				else
-				{
-					if (sender instanceof Player)
-					{
-						sender.sendMessage(ChatColor.RED + "[CombatTag] You don't have the permission 'combattag.reload'!");
-					}
-				}
-				return true;
-			}
-			else if (args[0].equalsIgnoreCase("check"))
-			{
-				if (args.length != 2)
-				{
-					sender.sendMessage(ChatColor.DARK_RED + "Error: " + ChatColor.WHITE + "Proper usage is '/ct check <player>'");
-				}
-				else
-				{
-					@SuppressWarnings("deprecation")
-					Player player = Bukkit.getPlayer(args[1]);
-					if (player == null)
-					{
-						sender.sendMessage(ChatColor.DARK_RED + "Error: " + ChatColor.WHITE + "Player not found.");
-					}
-					else
-					{
-						if(isInCombat((player).getUniqueId()))
+					case "CHECK":
+						if (args.length != 2)
 						{
-							sender.sendMessage(ChatColor.GREEN + player.getName() + " is in combat!");
+							sender.sendMessage(ChatColor.DARK_RED + "Error: " + ChatColor.WHITE + "Proper usage is '/ct check <player>'");
 						}
 						else
 						{
-							sender.sendMessage(ChatColor.RED + player.getName() + " is not in combat!");
-						}
-					}
-				}
-				return true;
-			}
-			else if (args[0].equalsIgnoreCase("command"))
-			{
-				if (sender.hasPermission("combattag.command"))
-				{
-					if (args.length > 2)
-					{
-						if (args[1].equalsIgnoreCase("add"))
-						{
-							if (args[2].length() == 0 || !args[2].startsWith("/"))
+							@SuppressWarnings("deprecation")
+							Player player = Bukkit.getPlayer(args[1]);
+							if (player == null)
 							{
-								sender.sendMessage(ChatColor.RED + "[CombatTag] Correct Usage: /ct command add /<command>");
+								sender.sendMessage(ChatColor.DARK_RED + "Error: " + ChatColor.WHITE + "Player not found.");
 							}
 							else
 							{
-								String disabledCommands = settingsHelper.getProperty("disabledCommands");
-								if (!disabledCommands.contains(args[2]))
+								if(isInCombat((player).getUniqueId()))
 								{
-									disabledCommands = disabledCommands.substring(0, disabledCommands.length() - 1) + "," + args[2] + "]";
-									disabledCommands = disabledCommands.replace("[,", "[");
-									disabledCommands = disabledCommands.replaceAll(",,", ",");
-									settingsHelper.setProperty("disabledCommands", disabledCommands);
-									settingsHelper.saveConfig();
-									sender.sendMessage(ChatColor.RED + "[CombatTag] Added " + args[2] + " to combat blocked commands.");
-									settings = new SettingsLoader().loadSettings(settingsHelper, this.getDescription().getVersion());
+									sender.sendMessage(ChatColor.GREEN + player.getName() + " is in combat!");
 								}
 								else
 								{
-									sender.sendMessage(ChatColor.RED + "[CombatTag] That command is already in the blocked commands list.");
+									sender.sendMessage(ChatColor.RED + player.getName() + " is not in combat!");
 								}
 							}
 						}
-						else if (args[1].equalsIgnoreCase("remove"))
+						break;
+
+					case "RELOAD":
+						if (sender.hasPermission("combattag.reload"))
 						{
-							if (args[2].length() == 0 || !args[2].startsWith("/"))
+							settings = new SettingsLoader().loadSettings(settingsHelper, this.getDescription().getVersion());
+							if (sender instanceof Player)
 							{
-								sender.sendMessage(ChatColor.RED + "[CombatTag] Correct Usage: /ct command remove /<command>");
+								sender.sendMessage(ChatColor.RED + "[CombatTag] Settings were reloaded!");
 							}
 							else
 							{
-								String disabledCommands = settingsHelper.getProperty("disabledCommands");
-								if (disabledCommands.contains(args[2] + ",") || disabledCommands.contains(args[2] + "]")) {
-									disabledCommands = disabledCommands.replace(args[2] + ",", "");
-									disabledCommands = disabledCommands.replace(args[2] + "]", "]");
-									disabledCommands = disabledCommands.replace(",]", "]");
-									disabledCommands = disabledCommands.replaceAll(",,", ",");
-									settingsHelper.setProperty("disabledCommands", disabledCommands);
-									settingsHelper.saveConfig();
-									sender.sendMessage(ChatColor.RED + "[CombatTag] Removed " + args[2] + " from combat blocked commands.");
-									settings = new SettingsLoader().loadSettings(settingsHelper, this.getDescription().getVersion());
+								log.info("[CombatTag] Settings were reloaded!");
+							}
+						}
+						else
+						{
+							if (sender instanceof Player)
+							{
+								sender.sendMessage(ChatColor.RED + "[CombatTag] You don't have the permission 'combattag.reload'!");
+							}
+						}
+						break;
+						
+					case "FORCETAG":
+						if (sender.hasPermission("combattag.admin"))
+						{
+							if (args.length != 2)
+							{
+								sender.sendMessage(ChatColor.DARK_RED + "Error: " + ChatColor.WHITE + "Proper usage is '/ct forcetag <player>'");
+							}
+							else
+							{
+								@SuppressWarnings("deprecation")
+								Player player = Bukkit.getPlayer(args[1]);
+								if (player == null)
+								{
+									sender.sendMessage(ChatColor.DARK_RED + "Error: " + ChatColor.WHITE + "Player not found.");
 								}
 								else
 								{
-									sender.sendMessage(ChatColor.RED + "[CombatTag] That command is not in the blocked commands list.");
+									if (isInCombat((player).getUniqueId()))
+									{
+										sender.sendMessage(ChatColor.RED + player.getName() + " is already in combat!");
+									}
+									else
+									{
+										addTagged(player);
+										sender.sendMessage(ChatColor.GREEN + "Tagged " + player.getName() + ".");
+									}
 								}
 							}
 						}
-					}
-					else
-					{
-						sender.sendMessage(ChatColor.RED + "[CombatTag] Correct Usage: /ct command <add/remove> /<command>");
-					}
+
+					case "COMMAND":
+						if (sender.hasPermission("combattag.command"))
+						{
+							if (args.length > 2)
+							{
+								if (args[1].equalsIgnoreCase("add"))
+								{
+									if (args[2].length() == 0 || !args[2].startsWith("/"))
+									{
+										sender.sendMessage(ChatColor.RED + "[CombatTag] Correct Usage: /ct command add /<command>");
+									}
+									else
+									{
+										String disabledCommands = settingsHelper.getProperty("disabledCommands");
+										if (!disabledCommands.contains(args[2]))
+										{
+											disabledCommands = disabledCommands.substring(0, disabledCommands.length() - 1) + "," + args[2] + "]";
+											disabledCommands = disabledCommands.replace("[,", "[");
+											disabledCommands = disabledCommands.replaceAll(",,", ",");
+											settingsHelper.setProperty("disabledCommands", disabledCommands);
+											settingsHelper.saveConfig();
+											sender.sendMessage(ChatColor.RED + "[CombatTag] Added " + args[2] + " to combat blocked commands.");
+											settings = new SettingsLoader().loadSettings(settingsHelper, this.getDescription().getVersion());
+										}
+										else
+										{
+											sender.sendMessage(ChatColor.RED + "[CombatTag] That command is already in the blocked commands list.");
+										}
+									}
+								}
+								else if (args[1].equalsIgnoreCase("remove"))
+								{
+									if (args[2].length() == 0 || !args[2].startsWith("/"))
+									{
+										sender.sendMessage(ChatColor.RED + "[CombatTag] Correct Usage: /ct command remove /<command>");
+									}
+									else
+									{
+										String disabledCommands = settingsHelper.getProperty("disabledCommands");
+										if (disabledCommands.contains(args[2] + ",") || disabledCommands.contains(args[2] + "]")) {
+											disabledCommands = disabledCommands.replace(args[2] + ",", "");
+											disabledCommands = disabledCommands.replace(args[2] + "]", "]");
+											disabledCommands = disabledCommands.replace(",]", "]");
+											disabledCommands = disabledCommands.replaceAll(",,", ",");
+											settingsHelper.setProperty("disabledCommands", disabledCommands);
+											settingsHelper.saveConfig();
+											sender.sendMessage(ChatColor.RED + "[CombatTag] Removed " + args[2] + " from combat blocked commands.");
+											settings = new SettingsLoader().loadSettings(settingsHelper, this.getDescription().getVersion());
+										}
+										else
+										{
+											sender.sendMessage(ChatColor.RED + "[CombatTag] That command is not in the blocked commands list.");
+										}
+									}
+								}
+							}
+							else
+							{
+								sender.sendMessage(ChatColor.RED + "[CombatTag] Correct Usage: /ct command <add/remove> /<command>");
+							}
+						}
+						break;
+						
+					default:
+						sender.sendMessage(ChatColor.RED + "[CombatTag] That is not a valid command!");	
 				}
-				return true;
-			}
-			else
-			{
-				sender.sendMessage(ChatColor.RED + "[CombatTag] That is not a valid command!");
-				return true;
 			}
 		}
-		return false;
+		return true;
 	}
 
     @Override
