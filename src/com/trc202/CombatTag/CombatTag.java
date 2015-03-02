@@ -179,28 +179,6 @@ public class CombatTag extends JavaPlugin {
 						}
 						break;
 
-					case "RELOAD":
-						if (sender.hasPermission("combattag.reload"))
-						{
-							settings = new SettingsLoader().loadSettings(settingsHelper, this.getDescription().getVersion());
-							if (sender instanceof Player)
-							{
-								sender.sendMessage(ChatColor.RED + "[CombatTag] Settings were reloaded!");
-							}
-							else
-							{
-								log.info("[CombatTag] Settings were reloaded!");
-							}
-						}
-						else
-						{
-							if (sender instanceof Player)
-							{
-								sender.sendMessage(ChatColor.RED + "[CombatTag] You don't have the permission 'combattag.reload'!");
-							}
-						}
-						break;
-						
 					case "FORCETAG":
 						if (sender.hasPermission("combattag.admin"))
 						{
@@ -231,7 +209,7 @@ public class CombatTag extends JavaPlugin {
 							}
 						}
 						break;
-						
+
 					case "FORCEUNTAG":
 						if (sender.hasPermission("combattag.admin"))
 						{
@@ -263,8 +241,30 @@ public class CombatTag extends JavaPlugin {
 						}
 						break;
 
+					case "RELOAD":
+						if (sender.hasPermission("combattag.superadmin"))
+						{
+							settings = new SettingsLoader().loadSettings(settingsHelper, this.getDescription().getVersion());
+							if (sender instanceof Player)
+							{
+								sender.sendMessage(ChatColor.RED + "[CombatTag] Settings were reloaded!");
+							}
+							else
+							{
+								log.info("[CombatTag] Settings were reloaded!");
+							}
+						}
+						else
+						{
+							if (sender instanceof Player)
+							{
+								sender.sendMessage(ChatColor.RED + "[CombatTag] You don't have the permission 'combattag.reload'!");
+							}
+						}
+						break;	
+
 					case "COMMAND":
-						if (sender.hasPermission("combattag.command"))
+						if (sender.hasPermission("combattag.superadmin"))
 						{
 							if (args.length > 2)
 							{
