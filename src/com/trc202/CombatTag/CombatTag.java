@@ -33,7 +33,7 @@ public class CombatTag extends JavaPlugin {
     public final Logger log = Logger.getLogger("Minecraft");
     private HashMap<UUID, Long> tagged;
     private static String mainDirectory = "plugins/CombatTagInstakill";
-    private static final List<String> SUBCOMMANDS = ImmutableList.of("reload", "command", "forcetag");
+    private static final List<String> SUBCOMMANDS = ImmutableList.of("reload", "command", "forcetag", "forceuntag");
     private static final List<String> COMMAND_SUBCOMMANDS = ImmutableList.of("add", "remove");
 
     
@@ -218,7 +218,7 @@ public class CombatTag extends JavaPlugin {
 								}
 								else
 								{
-									if (isInCombat((player).getUniqueId()))
+									if (isInCombat(player.getUniqueId()))
 									{
 										sender.sendMessage(ChatColor.RED + player.getName() + " is already in combat!");
 									}
@@ -226,6 +226,36 @@ public class CombatTag extends JavaPlugin {
 									{
 										addTagged(player);
 										sender.sendMessage(ChatColor.GREEN + "Tagged " + player.getName() + ".");
+									}
+								}
+							}
+						}
+						
+					case "FORCEUNTAG":
+						if (sender.hasPermission("combattag.admin"))
+						{
+							if (args.length != 2)
+							{
+								sender.sendMessage(ChatColor.DARK_RED + "Error: " + ChatColor.WHITE + "Proper usage is '/ct forceuntag <player>'");
+							}
+							else
+							{
+								@SuppressWarnings("deprecation")
+								Player player = Bukkit.getPlayer(args[1]);
+								if (player == null)
+								{
+									sender.sendMessage(ChatColor.DARK_RED + "Error: " + ChatColor.WHITE + "Player not found.");
+								}
+								else
+								{
+									if (!isInCombat(player.getUniqueId()))
+									{
+										sender.sendMessage(ChatColor.RED + player.getName() + " is not in combat!");
+									}
+									else
+									{
+										removeTagged(player.getUniqueId());
+										sender.sendMessage(ChatColor.GREEN + "Untagged " + player.getName() + ".");
 									}
 								}
 							}
