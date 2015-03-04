@@ -27,100 +27,98 @@ import com.trc202.helpers.SettingsLoader;
 
 public class CombatTag extends JavaPlugin {
 	
-    private SettingsHelper settingsHelper;
-    private File settingsFile;
-    public Settings settings;
-    public final Logger log = Logger.getLogger("Minecraft");
-    private HashMap<UUID, Long> tagged;
-    private static String mainDirectory = "plugins/CombatTagInstakill";
-    private static final List<String> SUBCOMMANDS = ImmutableList.of("reload", "command", "forcetag", "forceuntag");
-    private static final List<String> COMMAND_SUBCOMMANDS = ImmutableList.of("add", "remove");
+	private SettingsHelper settingsHelper;
+	private File settingsFile;
+	public Settings settings;
+	public final Logger log = Logger.getLogger("Minecraft");
+	private HashMap<UUID, Long> tagged;
+	private static String mainDirectory = "plugins/CombatTagInstakill";
+	private static final List<String> SUBCOMMANDS = ImmutableList.of("reload", "command", "forcetag", "forceuntag");
+	private static final List<String> COMMAND_SUBCOMMANDS = ImmutableList.of("add", "remove");
 
-    
-    public final CombatTagIncompatibles ctIncompatible = new CombatTagIncompatibles(this);
-    private final NoPvpPlayerListener plrListener = new NoPvpPlayerListener(this);
-    public final NoPvpEntityListener entityListener = new NoPvpEntityListener(this);
-    private final NoPvpBlockListener blockListener = new NoPvpBlockListener(this);
-    private final CombatTagCommandPrevention commandPreventer = new CombatTagCommandPrevention(this);
+	private final NoPvpPlayerListener plrListener = new NoPvpPlayerListener(this);
+	public final NoPvpEntityListener entityListener = new NoPvpEntityListener(this);
+	private final NoPvpBlockListener blockListener = new NoPvpBlockListener(this);
+	private final CombatTagCommandPrevention commandPreventer = new CombatTagCommandPrevention(this);
 
-    public CombatTag()
-    {
-        settings = new Settings();
-        new File(mainDirectory).mkdirs();
-        settingsFile = new File(mainDirectory + File.separator + "settings.prop");
-        settingsHelper = new SettingsHelper(settingsFile, "CombatTag");
-    }
-
-    @Override
-    public void onEnable()
-    {
-        tagged = new HashMap<UUID, Long>();
-        settings = new SettingsLoader().loadSettings(settingsHelper, this.getDescription().getVersion());
-        PluginManager pm = getServer().getPluginManager();
-        pm.registerEvents(plrListener, this);
-        pm.registerEvents(entityListener, this);
-        pm.registerEvents(commandPreventer, this);
-        pm.registerEvents(blockListener, this);
-        log.info("[" + getDescription().getName() + "]" + " has loaded with a tag time of " + settings.getTagDuration() + " seconds");
-    }
-
-    public boolean addTagged(Player player)
-    {
-    	if (player.isOnline())
-    	{
-    		tagged.remove(player.getUniqueId());
-    		tagged.put(player.getUniqueId(), PvPTimeout(getTagDuration()));
-    		return true;
-    	}
-    	return false;
-    }
-
-    public long getRemainingTagTime(UUID uuid)
-    {
-    	if (tagged.get(uuid) == null)
-    	{
-    		return -1;
-    	}
-    	return (tagged.get(uuid) - System.currentTimeMillis());
+	public CombatTag()
+	{
+		settings = new Settings();
+		new File(mainDirectory).mkdirs();
+		settingsFile = new File(mainDirectory + File.separator + "settings.prop");
+		settingsHelper = new SettingsHelper(settingsFile, "CombatTag");
 	}
-    
-    public SettingsHelper getSettingsHelper()
-    {
-    	return this.settingsHelper;
-    }
-    
-    /**
-     *
-     * @return the system tag duration as set by the user
-     */
-    public int getTagDuration()
-    {
-        return settings.getTagDuration();
-    }
-    
-    public boolean inTagged(UUID uuid)
-    {
-    	return tagged.containsKey(uuid);
-    }
-    
-    public boolean isDebugEnabled()
-    {
-        return settings.isDebugEnabled();
-    }
-    
-    public boolean isInCombat(UUID uuid)
-    {
-    	if (getRemainingTagTime(uuid) < 0)
-    	{
-    		tagged.remove(uuid);
-    		return false;
-    	}
-    	else
-    	{
-    		return true;
-    	}
-    }
-    
+
+	@Override
+	public void onEnable()
+	{
+		tagged = new HashMap<UUID, Long>();
+		settings = new SettingsLoader().loadSettings(settingsHelper, this.getDescription().getVersion());
+		PluginManager pm = getServer().getPluginManager();
+		pm.registerEvents(plrListener, this);
+		pm.registerEvents(entityListener, this);
+		pm.registerEvents(commandPreventer, this);
+		pm.registerEvents(blockListener, this);
+		log.info("[" + getDescription().getName() + "]" + " has loaded with a tag time of " + settings.getTagDuration() + " seconds");
+	}
+
+	public boolean addTagged(Player player)
+	{
+		if (player.isOnline())
+		{
+			tagged.remove(player.getUniqueId());
+			tagged.put(player.getUniqueId(), PvPTimeout(getTagDuration()));
+			return true;
+		}
+		return false;
+	}
+
+	public long getRemainingTagTime(UUID uuid)
+	{
+		if (tagged.get(uuid) == null)
+		{
+			return -1;
+		}
+		return (tagged.get(uuid) - System.currentTimeMillis());
+	}
+	
+	public SettingsHelper getSettingsHelper()
+	{
+		return this.settingsHelper;
+	}
+	
+	/**
+	 *
+	 * @return the system tag duration as set by the user
+	 */
+	public int getTagDuration()
+	{
+		return settings.getTagDuration();
+	}
+	
+	public boolean inTagged(UUID uuid)
+	{
+		return tagged.containsKey(uuid);
+	}
+	
+	public boolean isDebugEnabled()
+	{
+		return settings.isDebugEnabled();
+	}
+	
+	public boolean isInCombat(UUID uuid)
+	{
+		if (getRemainingTagTime(uuid) < 0)
+		{
+			tagged.remove(uuid);
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
+	
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String commandLabel, String[] args)
 	{
@@ -334,35 +332,36 @@ public class CombatTag extends JavaPlugin {
 		return true;
 	}
 
-    @Override
-    public final List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args)
-    {
-    	if (args.length == 1)
-    	{
-    		return StringUtil.copyPartialMatches(args[0], SUBCOMMANDS, new ArrayList<String>(SUBCOMMANDS.size()));
-    	}
-    	else if (args.length == 2)
-    	{
-    		System.out.println(args[1]);
-    		if (args[0].equalsIgnoreCase("command"))
-    		{
-    			return StringUtil.copyPartialMatches(args[1], COMMAND_SUBCOMMANDS, new ArrayList<String>(COMMAND_SUBCOMMANDS.size()));
-    		}
-    	}
-    	return ImmutableList.of();
-    }
-    
-    public long PvPTimeout(int seconds)
-    {
+	@Override
+	public final List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args)
+	{
+		if (args.length == 1)
+		{
+			return StringUtil.copyPartialMatches(args[0], SUBCOMMANDS, new ArrayList<String>(SUBCOMMANDS.size()));
+		}
+		else if (args.length == 2)
+		{
+			System.out.println(args[1]);
+			if (args[0].equalsIgnoreCase("command"))
+			{
+				return StringUtil.copyPartialMatches(args[1], COMMAND_SUBCOMMANDS, new ArrayList<String>(COMMAND_SUBCOMMANDS.size()));
+			}
+		}
+		return ImmutableList.of();
+	}
+	
+	public long PvPTimeout(int seconds)
+	{
 		return System.currentTimeMillis() + (seconds * 1000);
 	}
-    
-    public long removeTagged(UUID uuid)
-    {
-    	if (inTagged(uuid))
-    	{
-    		return tagged.remove(uuid);
-    	}
-    	return -1;
-    }
+	
+	public long removeTagged(UUID uuid)
+	{
+		if (inTagged(uuid))
+		{
+			return tagged.remove(uuid);
+		}
+		return -1;
+	}
+
 }
