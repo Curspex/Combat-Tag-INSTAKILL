@@ -1,4 +1,4 @@
-package com.trc202.CombatTagListeners;
+package com.trc202.combattaglisteners;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -14,7 +14,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 
 import com.earth2me.essentials.Essentials;
-import com.trc202.CombatTag.CombatTag;
+import com.trc202.combattag.CombatTag;
 
 public class NoPvpEntityListener implements Listener {
 

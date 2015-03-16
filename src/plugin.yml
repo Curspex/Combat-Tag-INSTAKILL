@@ -1,7 +1,7 @@
 name: CombatTag
 version: 1.2.2
 authors: [cheddar262, Omnivion]
-main: com.trc202.CombatTag.CombatTag
+main: com.trc202.combattag.CombatTag
 dev-url: https://github.com/Curspex/Combat-Tag-INSTAKILL
 description: Prevent players from logging out in combat
 commands:
