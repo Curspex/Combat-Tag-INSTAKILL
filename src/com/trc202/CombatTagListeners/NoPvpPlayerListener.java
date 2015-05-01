@@ -1,4 +1,4 @@
-package com.trc202.combattaglisteners;
+package com.trc202.CombatTagListeners;
 
 import java.util.UUID;
 
@@ -12,7 +12,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
-import com.trc202.combattag.CombatTag;
+import com.trc202.CombatTag.CombatTag;
 
 public class NoPvpPlayerListener implements Listener {
 	

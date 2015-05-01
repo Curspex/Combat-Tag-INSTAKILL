@@ -1,4 +1,4 @@
-package com.trc202.combattag;
+package com.trc202.CombatTag;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -17,10 +17,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.StringUtil;
 
 import com.google.common.collect.ImmutableList;
-import com.trc202.combattaglisteners.CombatTagCommandPrevention;
-import com.trc202.combattaglisteners.NoPvpBlockListener;
-import com.trc202.combattaglisteners.NoPvpEntityListener;
-import com.trc202.combattaglisteners.NoPvpPlayerListener;
+import com.trc202.CombatTagListeners.CombatTagCommandPrevention;
+import com.trc202.CombatTagListeners.NoPvpBlockListener;
+import com.trc202.CombatTagListeners.NoPvpEntityListener;
+import com.trc202.CombatTagListeners.NoPvpPlayerListener;
 import com.trc202.helpers.Settings;
 import com.trc202.helpers.SettingsHelper;
 import com.trc202.helpers.SettingsLoader;
