@@ -16,6 +16,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.StringUtil;
 
+import com.exloki.curspexmain.modules.core.Modules;
 import com.google.common.collect.ImmutableList;
 import com.trc202.CombatTagListeners.CombatTagCommandPrevention;
 import com.trc202.CombatTagListeners.NoPvpBlockListener;
@@ -66,6 +67,12 @@ public class CombatTag extends JavaPlugin {
 	{
 		if (player.isOnline())
 		{
+			// EXPFLIGHT TEMP FIX BEGIN //
+			
+			if (Modules.EXPFLIGHT.isUsingExpflight(player))
+				Modules.EXPFLIGHT.disableExpflight(player, true);
+			
+			// EXPFLIGHT TEMP FIX END //
 			tagged.remove(player.getUniqueId());
 			tagged.put(player.getUniqueId(), PvPTimeout(getTagDuration()));
 			return true;
