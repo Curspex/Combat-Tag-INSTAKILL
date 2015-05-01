@@ -2,7 +2,6 @@ package com.trc202.CombatTagListeners;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -44,7 +43,7 @@ public class NoPvpEntityListener implements Listener {
 		{
 			Player tagged = (Player) e.getEntity();
 			
-			if ((dmgr instanceof Player) && plugin.settings.playerTag())
+			if ((dmgr instanceof Player)/* && plugin.settings.playerTag()*/)
 			{
 				Player damagerPlayer = (Player) dmgr;
 				if(!(damagerPlayer == null && damagerPlayer == tagged))
@@ -70,22 +69,29 @@ public class NoPvpEntityListener implements Listener {
 	Essentials essentials = (Essentials) Bukkit.getPluginManager().getPlugin("Essentials");
 	public void onPlayerDamageByPlayer(Player damager, Player damaged)
 	{
-		if (!essentials.getUser(damager).isVanished())
+		if (essentials != null && essentials.getUser(damager) != null && !essentials.getUser(damager).isVanished())
+			return;
+		
+		/*if (plugin.settings.blockCreativeTagging() && damager.getGameMode() == GameMode.CREATIVE)
 		{
-			if (plugin.settings.blockCreativeTagging() && damager.getGameMode() == GameMode.CREATIVE)
-			{
-				damager.sendMessage(ChatColor.RED + "[CombatTag] You can't tag players while in creative mode!");
-				return;
-			}
+			damager.sendMessage(ChatColor.RED + "[CombatTag] You can't tag players while in creative mode!");
+			return;
+		}*/
 
-			if (plugin.settings.isSendMessageWhenTagged() && !plugin.isInCombat(damager.getUniqueId()))
-			{
-				String tagMessage = plugin.settings.getTagMessageDamager();
-				tagMessage = tagMessage.replace("[player]", "" + damaged.getName());
-				damager.sendMessage(ChatColor.RED + "[CombatTag] " + tagMessage);
-			}
-			plugin.addTagged(damager);
+		if (/*plugin.settings.isSendMessageWhenTagged() && */!plugin.isInCombat(damager.getUniqueId()))
+		{
+			String tagMessage = plugin.settings.getTagMessageDamager();
+			tagMessage = tagMessage.replace("[player]", "" + damaged.getName());
+			damager.sendMessage(ChatColor.RED + "[CombatTag] " + tagMessage);
 		}
+		if (/*plugin.settings.isSendMessageWhenTagged() && */!plugin.isInCombat(damaged.getUniqueId()))
+		{
+			String tagMessage = plugin.settings.getTagMessageDamaged();
+			tagMessage = tagMessage.replace("[player]", "" + damager.getName());
+			damaged.sendMessage(ChatColor.RED + "[CombatTag] " + tagMessage);
+		}
+		
+		plugin.addTagged(damager, damaged);
 	}
 
 

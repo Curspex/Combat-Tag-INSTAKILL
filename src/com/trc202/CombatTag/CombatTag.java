@@ -32,7 +32,7 @@ public class CombatTag extends JavaPlugin {
 	public Settings settings;
 	public final Logger log = Logger.getLogger("Minecraft");
 	private HashMap<UUID, Long> tagged;
-	private static String mainDirectory = "plugins/CombatTagInstakill";
+	private static String mainDirectory = "plugins/CombatTag";
 	private static final List<String> SUBCOMMANDS = ImmutableList.of("reload", "command", "forcetag", "forceuntag");
 	private static final List<String> COMMAND_SUBCOMMANDS = ImmutableList.of("add", "remove");
 
@@ -71,6 +71,12 @@ public class CombatTag extends JavaPlugin {
 			return true;
 		}
 		return false;
+	}
+	
+	public void addTagged(Player player1, Player player2)
+	{
+		this.addTagged(player1);
+		this.addTagged(player2);
 	}
 
 	public long getRemainingTagTime(UUID uuid)
