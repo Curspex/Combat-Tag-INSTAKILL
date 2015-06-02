@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="C:/Users/Adam/Desktop/dev/Devel/Sof/Resco/STABLE/Essentials.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Adam/Desktop/CMain.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="C:/Users/ExLoki/Dropbox/Coding/Jars/Curspex/CMain.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ExLoki/Dropbox/Coding/Jars/Public Plugins/Essentials.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ExLoki/Dropbox/Coding/Jars/Libraries/Craftbukkit/Bukkit_1-7-10.jar" sourcepath="C:/Users/Exloki/Dropbox/Coding/Source Code/Bukkit-master.zip">
+		<attributes>
+			<attribute name="javadoc_location" value="http://jd.bukkit.org/apidocs"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

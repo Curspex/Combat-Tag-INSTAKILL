@@ -78,13 +78,13 @@ public class NoPvpEntityListener implements Listener {
 			return;
 		}*/
 
-		if (/*plugin.settings.isSendMessageWhenTagged() && */!plugin.isInCombat(damager.getUniqueId()))
+		if (/*plugin.settings.isSendMessageWhenTagged() && */!plugin.isInCombat(damager.getUniqueId()) && !damaged.hasMetadata(CombatTag.IGNORE_META))
 		{
 			String tagMessage = plugin.settings.getTagMessageDamager();
 			tagMessage = tagMessage.replace("[player]", "" + damaged.getName());
 			damager.sendMessage(ChatColor.RED + "[CombatTag] " + tagMessage);
 		}
-		if (/*plugin.settings.isSendMessageWhenTagged() && */!plugin.isInCombat(damaged.getUniqueId()))
+		if (/*plugin.settings.isSendMessageWhenTagged() && */!plugin.isInCombat(damaged.getUniqueId()) && !damaged.hasMetadata(CombatTag.IGNORE_META))
 		{
 			String tagMessage = plugin.settings.getTagMessageDamaged();
 			tagMessage = tagMessage.replace("[player]", "" + damager.getName());

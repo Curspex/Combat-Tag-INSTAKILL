@@ -90,7 +90,7 @@ public class NoPvpPlayerListener implements Listener {
 	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 	public void onTeleport(PlayerTeleportEvent event)
 	{
-		if (plugin.settings.blockTeleport() && plugin.isInCombat(event.getPlayer().getUniqueId()))
+		if (plugin.settings.blockTeleport() && plugin.isInCombat(event.getPlayer().getUniqueId()) && !event.getPlayer().hasMetadata(CombatTag.IGNORE_META))
 		{
 			TeleportCause cause = event.getCause();
 			switch (cause)

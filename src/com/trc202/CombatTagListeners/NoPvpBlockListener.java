@@ -22,7 +22,7 @@ public class NoPvpBlockListener implements Listener {
 	public void onBlockBreakEvent(BlockBreakEvent event)
 	{
 		Player player = event.getPlayer();
-		if(plugin.isInCombat(player.getUniqueId()))
+		if(plugin.isInCombat(player.getUniqueId()) && !player.hasMetadata(CombatTag.IGNORE_META))
 		{
 			if(!isBlockEditWhileTagged())
 			{
@@ -35,7 +35,7 @@ public class NoPvpBlockListener implements Listener {
 	public void onBlockPlaceEvent(BlockPlaceEvent event)
 	{
 		Player player = event.getPlayer();
-		if(plugin.isInCombat(player.getUniqueId()))
+		if(plugin.isInCombat(player.getUniqueId()) && !player.hasMetadata(CombatTag.IGNORE_META))
 		{
 			if(!isBlockEditWhileTagged())
 			{
